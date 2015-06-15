@@ -19,8 +19,11 @@ function loadData() {
     
     // load streetview
     $($streetView).appendTo("body");
-    $greeting.text("So you want to live at " + $address + "?"); 
 
+    // change titles to match query
+    $greeting.text("So you want to live at " + $address + "?"); 
+    $nytHeaderElem.text("New York Times Articles at " + $address);
+    
 
     var nytUrl = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
     var apiKey = "a23984d3ba0e636a13d3179baebd543f:2:72307059";
@@ -28,10 +31,10 @@ function loadData() {
     address    = (address).split(' ').join('+');
     console.log(address);
     var url    = nytUrl + address + "&api-key=" + apiKey;
-    
+
     //New York Times article ajax
     $.getJSON(url, function(data){
-        console.log(data);
+        //$.each(data, )
     });
 
     //<li class="article"></li>
