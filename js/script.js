@@ -11,18 +11,30 @@ function loadData() {
     $wikiElem.text("");
     $nytElem.text("");
 
-    // load streetview
-
-    // YOUR CODE GOES HERE!
+    
     var $street  = $('#street').val();
     var $city    = $('#city').val();
     var $address =  $street + " , " + $city;
-    var $streetView = "<img class='bgimg' src='https://maps.googleapis.com/maps/api/streetview?size=600x400&location="
-                       + $address + "'>"
+    var $streetView = "<img class='bgimg' src='https://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + $address + "'>"
     
+    // load streetview
     $($streetView).appendTo("body");
-    
     $greeting.text("So you want to live at " + $address + "?"); 
+
+
+    var nytUrl = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
+    var apiKey = "a23984d3ba0e636a13d3179baebd543f:2:72307059";
+    address    = $street + ' ' + $city;
+    address    = (address).split(' ').join('+');
+    console.log(address);
+    var url    = nytUrl + address + "&api-key=" + apiKey;
+    
+    //New York Times article ajax
+    $.getJSON(url, function(data){
+        console.log(data);
+    });
+
+    //<li class="article"></li>
 
     return false;
 };
