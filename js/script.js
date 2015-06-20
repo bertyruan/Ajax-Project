@@ -36,7 +36,7 @@ function loadData() {
         console.log(data);
         $.each(data.response.docs, function(index, element){
             console.log(element.snippet);
-            $("#nytimes-articles").append("<li class='article'>" +
+            $($nytElem).append("<li class='article'>" +
                 "<a href='"+element.web_url+"'>" + element.headline.main + "</a>" +
                 "<p>" + element.snippet + "</p>" + "</li>");
         });
@@ -47,7 +47,11 @@ function loadData() {
 
 
     address = (address).split('+').join('|');
- 
+    //error handling for jsonp request
+    var wikiRequestTimeout = setTimeout(function(){
+        $wikiElem.text("failed to get response");   
+    }, 8000);
+
     //Wikipedia ajax call
     $.ajax({
         url:'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&titles=' + address,
@@ -59,8 +63,9 @@ function loadData() {
             console.log(data);
             $.each(data.query.pages, function(index, element){
                 console.log(element);
-                $('#wikipedia-links').append("<li> <a href='" + element.fullurl + "'>" + element.title + "</a> </li>");
+                $($wikiElem).append("<li> <a href='" + element.fullurl + "'>" + element.title + "</a> </li>");
             });   
+            clearTimeout(wikiRequestTimeout);
     });
 
     return false;
